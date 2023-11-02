@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33020.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90B37D12-CB8A-48C5-8E60-64A2EE62E15C}"
+	ProjectSection(SolutionItems) = preProject
+		..\LICENSE = ..\LICENSE
+		..\.github\README.md = ..\.github\README.md
+		..\umbraco-marketplace.json = ..\umbraco-marketplace.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HCS.Meta.Robots", "HCS.Meta.Robots\HCS.Meta.Robots.csproj", "{A1D91268-AD15-4537-8156-A1D3D19EAB0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HCS.Meta.Robots.TestSite", "HCS.Meta.Robots.TestSite\HCS.Meta.Robots.TestSite.csproj", "{8717D246-2AD4-4988-ACD5-D6A50DFA1D36}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1D91268-AD15-4537-8156-A1D3D19EAB0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D91268-AD15-4537-8156-A1D3D19EAB0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D91268-AD15-4537-8156-A1D3D19EAB0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D91268-AD15-4537-8156-A1D3D19EAB0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8717D246-2AD4-4988-ACD5-D6A50DFA1D36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8717D246-2AD4-4988-ACD5-D6A50DFA1D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8717D246-2AD4-4988-ACD5-D6A50DFA1D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8717D246-2AD4-4988-ACD5-D6A50DFA1D36}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F07004F-9903-4AEB-9ED0-BE57A0326D20}
+	EndGlobalSection
+EndGlobal

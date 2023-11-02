@@ -1,0 +1,14 @@
+{
+    "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json", 
+    "AuthorDetails": {
+      "Name": "Nik Rimington",
+      "ImageUrl": "https://github.com/NikRimington.png"
+    },
+    "Category": "",
+    "Description": "",
+    "LicenseTypes": [ "Free" ],
+    "IssueTrackerUrl": "https://github.com/NikRimington/HCS.Meta.Robots/issues",
+    "PackageType": "Package",
+    "Tags": [],
+    "Title": "HCS.Meta.Robots"
+  }
