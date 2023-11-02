@@ -26,7 +26,8 @@ To enable robots.txt and prevent it from returning a deny all add the following 
 "HCS": {
     "Meta": {
         "RobotsEnabled" : true,
-        "RobotsEntries" : []
+        "RobotsEntries" : [],
+        "RobotsAddToDefault" : false
     }
 }
 ```
