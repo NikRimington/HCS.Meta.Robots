@@ -12,11 +12,11 @@ namespace HCS.Meta.Robots
         private readonly IRuntimeState _runtimeState;
         private readonly MetaRobotOptionsModel _config;
 
-        public AddRobotsHeaderMiddleware(RequestDelegate next, IRuntimeState runtimeState, IOptions<MetaRobotOptionsModel> options)
+        public AddRobotsHeaderMiddleware(RequestDelegate next, IRuntimeState runtimeState, IOptionsMonitor<MetaRobotOptionsModel> options)
         {
             _next = next;
             _runtimeState = runtimeState;
-            _config = options.Value;
+            _config = options.CurrentValue;
         }
 
         public async Task InvokeAsync(HttpContext context)
