@@ -13,10 +13,10 @@ public class RobotsTxtController : UmbracoPageController
     private const string DefaultRobots = "User-agent: *\nDisallow: /app_data\nDisallow: /app_plugins/\nDisallow: /install\nDisallow: /bin\nDisallow: /umbraco/";
 
     private readonly MetaRobotOptionsModel _config;
-    public RobotsTxtController(ILogger<RobotsTxtController> logger, ICompositeViewEngine compositeViewEngine, IOptions<MetaRobotOptionsModel> options)
+    public RobotsTxtController(ILogger<RobotsTxtController> logger, ICompositeViewEngine compositeViewEngine, IOptionsMonitor<MetaRobotOptionsModel> options)
         : base(logger, compositeViewEngine)
     {
-        _config = options.Value;
+        _config = options.CurrentValue;
     }
 
     public IActionResult Index()
