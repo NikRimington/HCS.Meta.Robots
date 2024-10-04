@@ -17,6 +17,17 @@ internal static class UmbracoBuilderExtensions
 
     private static IUmbracoBuilder RegisterServices(this IUmbracoBuilder builder)
     {
+        builder.Services.Configure<UmbracoPipelineOptions>(options => {
+            options.AddFilter(new UmbracoPipelineFilter(
+                "RobotsHeader",
+                _ => { },
+                applicationBuilder => {
+                    applicationBuilder.UseMiddleware<AddRobotsHeaderMiddleware>();
+                },
+                _ => { }
+            ));
+        });
+
         builder.Services.Configure<UmbracoRequestOptions>(options =>
         {
             var allowList = new[] { RoutePatterns.Default[0]};
