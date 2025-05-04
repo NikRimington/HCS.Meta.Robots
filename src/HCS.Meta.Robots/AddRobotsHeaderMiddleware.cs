@@ -33,7 +33,7 @@ namespace HCS.Meta.Robots
 
                 if (!_config.RobotsEnabled)
                 {
-                    context.Response.Headers.Add("X-Robots-Tag", "noindex");
+                    context.Response.Headers.Append("X-Robots-Tag", "noindex");
                 }
 
                 return Task.CompletedTask;

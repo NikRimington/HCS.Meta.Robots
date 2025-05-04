@@ -1,5 +1,6 @@
 using System.Text;
 using HCS.Meta.Robots.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,7 +26,7 @@ public class RobotsTxtController : UmbracoPageController
 
         if (_config.RobotsEnabled)
         {
-            Response.Headers.Add("Cache-Control", "max-age=10");
+            Response.Headers.Append("Cache-Control", "max-age=10");
             return Content(GetRobotsValue(), "text/plain", Encoding.UTF8);
         }
 
