@@ -56,7 +56,12 @@ internal static class UmbracoBuilderExtensions
                 "HCS.Meta.Robots",
                 _ => { },
                 _ => { },
-                applicationBuilder => {
+                applicationBuilder =>
+                {
+#if NET9_0_OR_GREATER
+                    applicationBuilder.UseAuthentication();
+                    applicationBuilder.UseAuthorization();
+#endif
                     applicationBuilder.UseEndpoints(u =>
                     {
                         for (int i = 0; i < RoutePatterns.Default.Length; i++)

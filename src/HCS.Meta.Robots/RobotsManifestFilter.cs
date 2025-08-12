@@ -1,7 +1,32 @@
 using Umbraco.Cms.Core.Manifest;
+#if NET9_0_OR_GREATER
+using Umbraco.Cms.Infrastructure.Manifest;
+#endif
 
 namespace HCS.Meta.Robots;
 
+#if NET9_0_OR_GREATER
+internal class RobotsManifestFilter : IPackageManifestReader
+{
+    public Task<IEnumerable<PackageManifest>> ReadPackageManifestsAsync()
+    {
+        var assembly = typeof(RobotsManifestFilter).Assembly;
+        var manifests = new List<PackageManifest>
+        {
+            new()
+            {
+                Version = assembly.GetName().Version?.ToString(3) ?? "0.1.0",
+                Name = "HCS.Meta.Robots",
+                AllowTelemetry = true,
+                Extensions =
+                []
+            }
+        };
+
+        return Task.FromResult<IEnumerable<PackageManifest>>(manifests);
+    }
+}
+#else
 internal class RobotsManifestFilter : IManifestFilter
 {
     public void Filter(List<PackageManifest> manifests)
@@ -27,3 +52,4 @@ internal class RobotsManifestFilter : IManifestFilter
         });
     }
 }
+#endif
