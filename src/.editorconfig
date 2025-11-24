@@ -400,3 +400,6 @@ dotnet_naming_style.instance_field_style.required_prefix = _
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 ##########################################
+
+# IDE0011: Add braces
+dotnet_diagnostic.IDE0011.severity = silent

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
+    <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <StaticWebAssetBasePath>App_Plugins</StaticWebAssetBasePath>
@@ -12,7 +12,7 @@
     <PackageTags>umbraco;umbraco-marketplace</PackageTags>
     <RootNamespace>HCS.Meta.Robots</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.3.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Nik Rimington</Authors>
     <Copyright>$([System.DateTime]::UtcNow.ToString(`yyyy`)) © Nik Rimington</Copyright>
     <PackageProjectUrl>https://github.com/NikRimington/HCS.Meta.Robots</PackageProjectUrl>
@@ -22,11 +22,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <LangVersion>12.0</LangVersion>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.*" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.*" />
-  </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="16.*" />

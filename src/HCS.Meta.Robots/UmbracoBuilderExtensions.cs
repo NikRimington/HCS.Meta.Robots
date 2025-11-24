@@ -19,24 +19,20 @@ internal static class UmbracoBuilderExtensions
     {
         builder.Services.Configure<UmbracoPipelineOptions>(options => {
             options.AddFilter(new UmbracoPipelineFilter(
-                "RobotsHeader",
-                _ => { },
-                applicationBuilder => {
+                name: "RobotsHeader",
+                preRouting: applicationBuilder => {
                     applicationBuilder.UseMiddleware<AddRobotsHeaderMiddleware>();
-                },
-                _ => { }
+                }
             ));
-        });
-
-        builder.Services.Configure<UmbracoRequestOptions>(options =>
-        {
-            var allowList = new[] { RoutePatterns.Default[0]};
-            var next = options.HandleAsServerSideRequest;
-            options.HandleAsServerSideRequest = httpRequest =>
+        }).Configure<UmbracoRequestOptions>(options =>
             {
-                return allowList.Any(route => httpRequest.Path.Value?.EndsWith(route, StringComparison.InvariantCultureIgnoreCase) == true) || next(httpRequest);
-            };
-        });
+                var allowList = new[] { RoutePatterns.Default[0]};
+                var next = options.HandleAsServerSideRequest;
+                options.HandleAsServerSideRequest = httpRequest =>
+                {
+                    return allowList.Any(route => httpRequest.Path.Value?.EndsWith(route, StringComparison.InvariantCultureIgnoreCase) == true) || next(httpRequest);
+                };
+            });
 
         return builder;
     }
@@ -54,15 +50,11 @@ internal static class UmbracoBuilderExtensions
     {
         builder.Services.Configure<UmbracoPipelineOptions>(options => {
             options.AddFilter(new UmbracoPipelineFilter(
-                "HCS.Meta.Robots",
-                _ => { },
-                _ => { },
-                applicationBuilder =>
+                name: "HCS.Meta.Robots",
+                postRouting: applicationBuilder =>
                 {
-#if NET9_0_OR_GREATER
                     applicationBuilder.UseAuthentication();
                     applicationBuilder.UseAuthorization();
-#endif
                     applicationBuilder.UseEndpoints(u =>
                     {
                         for (int i = 0; i < RoutePatterns.Default.Length; i++)
