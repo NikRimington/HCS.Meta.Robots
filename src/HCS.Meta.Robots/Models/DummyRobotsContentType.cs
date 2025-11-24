@@ -1,7 +1,7 @@
-﻿using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Models;
 
-namespace HCS.Meta.Robots;
+namespace HCS.Meta.Robots.Models;
 
 public class DummyRobotsContentType : IPublishedContentType
 {
@@ -13,7 +13,7 @@ public class DummyRobotsContentType : IPublishedContentType
 
     public PublishedItemType ItemType => PublishedItemType.Unknown;
 
-    public HashSet<string> CompositionAliases => new();
+    public HashSet<string> CompositionAliases => [];
 
     public ContentVariation Variations => ContentVariation.Nothing;
 

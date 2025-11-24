@@ -1,13 +1,13 @@
-﻿using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Models.PublishedContent;
 using System.Collections.ObjectModel;
 
-namespace HCS.Meta.Robots;
+namespace HCS.Meta.Robots.Models;
 
 public class DummyIPublishedContent : IPublishedContent
 {
     public int Id => -1;
 
-    public string? Name => "Robots Dummy Content";
+    public string Name => "Robots Dummy Content";
 
     public string? UrlSegment => null;
 
@@ -33,15 +33,15 @@ public class DummyIPublishedContent : IPublishedContent
 
     public IPublishedContent? Parent => null;
 
-    public IEnumerable<IPublishedContent>? Children => null;
+    public IEnumerable<IPublishedContent> Children => [];
 
-    public IEnumerable<IPublishedContent>? ChildrenForAllCultures => null;
+    public IEnumerable<IPublishedContent> ChildrenForAllCultures => [];
 
     public IPublishedContentType ContentType => new DummyRobotsContentType();
 
     public Guid Key => Guid.Empty;
 
-    public IEnumerable<IPublishedProperty> Properties => Array.Empty<IPublishedProperty>();
+    public IEnumerable<IPublishedProperty> Properties => [];
 
     public IPublishedProperty? GetProperty(string alias)
     {
