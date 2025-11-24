@@ -6,6 +6,7 @@ using Umbraco.Cms.Core.Routing;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 using System.Diagnostics.CodeAnalysis;
+using HCS.Meta.Robots.Models;
 
 namespace HCS.Meta.Robots;
 
