@@ -466,10 +466,8 @@ appsettings-schema.json
 # Temp folder containing Examine indexes, NuCache, MediaCache, etc.
 /umbraco/Data/TEMP/
 
-# SQLite database files - enable if you don't want to commit your test DB to the repo
-#/umbraco/Data/*.sqlite.db
-#/umbraco/Data/*.sqlite.db-shm
-#/umbraco/Data/*.sqlite.db-wal
+# Umbraco data folder (SQLite DB, temp files, etc.)
+/umbraco/Data/
 
 # Log files
 /umbraco/Logs/
