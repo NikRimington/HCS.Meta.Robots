@@ -31,7 +31,7 @@ public class  MetaLlmSiteConfiguration
             body.AppendLine(AdditionalNotes).AppendLine();
         }
 
-        foreach (var section in Sections ?? Array.Empty<LlmsLinkSection>())
+        foreach (var section in Sections ?? [])
         {
             body.AppendLine(section.ToString()).AppendLine();
         }

@@ -30,13 +30,10 @@ internal static class UmbracoBuilderExtensions
         }).Configure<UmbracoRequestOptions>(options =>
             {
                 var allowList = llmsEnabled
-                    ? new[] { RoutePatterns.Default[0], RoutePatterns.Llms[0] }
+                    ? [RoutePatterns.Default[0], RoutePatterns.Llms[0]]
                     : new[] { RoutePatterns.Default[0] };
                 var next = options.HandleAsServerSideRequest;
-                options.HandleAsServerSideRequest = httpRequest =>
-                {
-                    return allowList.Any(route => httpRequest.Path.Value?.EndsWith(route, StringComparison.InvariantCultureIgnoreCase) == true) || next(httpRequest);
-                };
+                options.HandleAsServerSideRequest = httpRequest => allowList.Any(route => httpRequest.Path.Value?.EndsWith(route, StringComparison.InvariantCultureIgnoreCase) == true) || next(httpRequest);
             });
 
         return builder;
