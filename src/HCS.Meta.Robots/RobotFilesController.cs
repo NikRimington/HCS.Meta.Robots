@@ -128,6 +128,11 @@ public class RobotFilesController : UmbracoPageController
                 _logger.LogError(ex, "Failed to deserialize llms.txt JSON file: {Path}", resolvedPath);
                 return null;
             }
+            catch (IOException ex)
+            {
+                _logger.LogError(ex, "Failed to read llms.txt JSON file: {Path}", resolvedPath);
+                return null;
+            }
         }
 
         _logger.LogWarning("Unsupported llms.txt file extension '{Extension}' for path: {Path}", ext, resolvedPath);

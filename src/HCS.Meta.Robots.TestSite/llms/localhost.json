@@ -1,0 +1,17 @@
+{
+  "Name": "LLMS Test Site (JSON)",
+  "Summary": "This content is loaded from a JSON file on disk.",
+  "AdditionalNotes": "This site is used for testing the HCS.Meta.Robots package.",
+  "Sections": [
+    {
+      "Title": "Package Docs",
+      "Url": "/docs",
+      "Description": "Full documentation for HCS.Meta.Robots."
+    },
+    {
+      "Title": "GitHub",
+      "Url": "https://github.com/NikRimington/HCS.Meta.Robots",
+      "Description": "Source code and issue tracker."
+    }
+  ]
+}
