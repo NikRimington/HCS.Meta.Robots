@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <StaticWebAssetBasePath>App_Plugins</StaticWebAssetBasePath>
@@ -20,14 +20,10 @@
     <PackageReadmeFile>README_nuget.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <LangVersion>12.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="16.*" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+  <ItemGroup>
     <PackageReference Include="Umbraco.Cms.Web.Website" Version="17.*" />
   </ItemGroup>
 
