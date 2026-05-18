@@ -1,5 +1,6 @@
 using HCS.Meta.Robots.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Web.Common.ApplicationBuilder;
@@ -17,65 +18,78 @@ internal static class UmbracoBuilderExtensions
 
     private static IUmbracoBuilder RegisterServices(this IUmbracoBuilder builder)
     {
+        var llmsEnabled = builder.Config.GetSection(MetaLlmsOptions.Key).GetValue<bool>("LlmsEnabled");
+
         builder.Services.Configure<UmbracoPipelineOptions>(options => {
             options.AddFilter(new UmbracoPipelineFilter(
-                "RobotsHeader",
-                _ => { },
-                applicationBuilder => {
+                name: "RobotsHeader",
+                postRouting: applicationBuilder => {
                     applicationBuilder.UseMiddleware<AddRobotsHeaderMiddleware>();
-                },
-                _ => { }
+                }
             ));
-        });
-
-        builder.Services.Configure<UmbracoRequestOptions>(options =>
-        {
-            var allowList = new[] { RoutePatterns.Default[0]};
-            var next = options.HandleAsServerSideRequest;
-            options.HandleAsServerSideRequest = httpRequest =>
+        }).Configure<UmbracoRequestOptions>(options =>
             {
-                return allowList.Any(route => httpRequest.Path.Value?.EndsWith(route, StringComparison.InvariantCultureIgnoreCase) == true) || next(httpRequest);
-            };
-        });
+                var allowList = llmsEnabled
+                    ? [RoutePatterns.Default[0], RoutePatterns.Llms[0]]
+                    : new[] { RoutePatterns.Default[0] };
+                var next = options.HandleAsServerSideRequest;
+                options.HandleAsServerSideRequest = httpRequest => allowList.Any(route => httpRequest.Path.Value?.EndsWith(route, StringComparison.InvariantCultureIgnoreCase) == true) || next(httpRequest);
+            });
 
         return builder;
     }
-
 
     private static IUmbracoBuilder RegisterOptions(this IUmbracoBuilder builder)
     {
         builder.Services.AddOptions<MetaRobotOptionsModel>()
             .Bind(builder.Config.GetSection(MetaRobotOptionsModel.Key));
 
+        builder.Services.AddOptions<MetaLlmsOptions>()
+            .Bind(builder.Config.GetSection(MetaLlmsOptions.Key));
+
         return builder;
     }
 
     private static IUmbracoBuilder RegisterRoutes(this IUmbracoBuilder builder)
     {
+        var llmsEnabled = builder.Config.GetSection(MetaLlmsOptions.Key).GetValue<bool>("LlmsEnabled");
+
         builder.Services.Configure<UmbracoPipelineOptions>(options => {
             options.AddFilter(new UmbracoPipelineFilter(
-                "HCS.Meta.Robots",
-                _ => { },
-                _ => { },
-                applicationBuilder =>
+                name: "HCS.Meta.Robots",
+                postRouting: applicationBuilder =>
                 {
-#if NET9_0_OR_GREATER
                     applicationBuilder.UseAuthentication();
                     applicationBuilder.UseAuthorization();
-#endif
                     applicationBuilder.UseEndpoints(u =>
                     {
                         for (int i = 0; i < RoutePatterns.Default.Length; i++)
                         {
                             u.MapControllerRoute(
-                                $"{nameof(RobotsTxtController)}_{i}",
+                                $"{nameof(RobotFilesController)}_Robots_{i}",
                                 RoutePatterns.Default[i],
                                 new
                                 {
-                                    Controller = ControllerExtensions.GetControllerName<RobotsTxtController>(),
-                                    Action = nameof(RobotsTxtController.Index)
+                                    Controller = ControllerExtensions.GetControllerName<RobotFilesController>(),
+                                    Action = nameof(RobotFilesController.Robots)
                                 })
                             .ForUmbracoPage(RoutingHelper.FindContentByDomain);
+                        }
+
+                        if (llmsEnabled)
+                        {
+                            for (int i = 0; i < RoutePatterns.Llms.Length; i++)
+                            {
+                                u.MapControllerRoute(
+                                    $"{nameof(RobotFilesController)}_Llms_{i}",
+                                    RoutePatterns.Llms[i],
+                                    new
+                                    {
+                                        Controller = ControllerExtensions.GetControllerName<RobotFilesController>(),
+                                        Action = nameof(RobotFilesController.Llms)
+                                    })
+                                .ForUmbracoPage(RoutingHelper.FindContentByDomain);
+                            }
                         }
                     });
                 }

@@ -1,39 +1,47 @@
 name: Release Package
 
-# This action will start when a correctly formatted tag is pushed (e.g. 0.1.0)
-
+# Release:  tags matching 2.1.0
+# Beta:     tags matching 2.1.0-beta.1, 2.1.0-preview.1, 2.1.0-rc.1, etc.
 on:
   push:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+-*"
 
 jobs:
   build:
-
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          if [[ "$VERSION" == *"-"* ]]; then
+            echo "IS_PRERELEASE=true" >> $GITHUB_OUTPUT
+            echo "BUILD_TYPE=Beta ($VERSION)" >> $GITHUB_OUTPUT
+          else
+            echo "IS_PRERELEASE=false" >> $GITHUB_OUTPUT
+            echo "BUILD_TYPE=Release ($VERSION)" >> $GITHUB_OUTPUT
+          fi
 
-    - name: Setup .NET 6
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
+      - name: Log build type
+        run: echo "Building ${{ steps.version.outputs.BUILD_TYPE }}"
 
-    - name: Setup .NET 8
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 8.0.x
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
 
-    - name: Setup .NET 9
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 9.0.x
-  
-    - name: Build project
-      run: dotnet build src\HCS.Meta.Robots\HCS.Meta.Robots.csproj --configuration Release
+      - name: Restore dependencies
+        run: dotnet restore src/HCS.Meta.Robots/HCS.Meta.Robots.csproj
 
-    - name: Push to NuGet
-      run: dotnet nuget push **\*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Build and pack
+        run: dotnet build src/HCS.Meta.Robots/HCS.Meta.Robots.csproj --configuration Release --no-restore -p:Version=${{ steps.version.outputs.VERSION }}
+
+      - name: Push to NuGet
+        run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

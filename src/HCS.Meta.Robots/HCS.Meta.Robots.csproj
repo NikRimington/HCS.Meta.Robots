@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <StaticWebAssetBasePath>App_Plugins</StaticWebAssetBasePath>
@@ -12,7 +12,7 @@
     <PackageTags>umbraco;umbraco-marketplace</PackageTags>
     <RootNamespace>HCS.Meta.Robots</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.2.1</Version>
+    <Version>2.0.0</Version>
     <Authors>Nik Rimington</Authors>
     <Copyright>$([System.DateTime]::UtcNow.ToString(`yyyy`)) © Nik Rimington</Copyright>
     <PackageProjectUrl>https://github.com/NikRimington/HCS.Meta.Robots</PackageProjectUrl>
@@ -20,25 +20,11 @@
     <PackageReadmeFile>README_nuget.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <LangVersion>12.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.*" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.*" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.*" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.*" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="16.*" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="17.0.0-rc2" />
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="17.*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +32,11 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <Content Update="appsettings-schema.HCS.Meta.Robots.json">
+      <Pack>True</Pack>
+      <PackagePath>contentFiles/any/any/</PackagePath>
+      <CopyToOutput>true</CopyToOutput>
+    </Content>
   </ItemGroup>
 
 </Project>
