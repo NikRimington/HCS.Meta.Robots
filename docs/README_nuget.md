@@ -12,7 +12,7 @@ Umbraco package that serves `robots.txt` and `llms.txt` from configuration. Robo
 dotnet add package HCS.Meta.Robots
 ```
 
-Requires Umbraco 18+.
+Requires Umbraco 17+ (tested on 17 and 18).
 
 ---
 
