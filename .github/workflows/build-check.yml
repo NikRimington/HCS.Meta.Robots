@@ -1,0 +1,28 @@
+name: Build Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        umbraco-website-version: ["17.4.0", "18.1.0"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore against Umbraco.Cms.Web.Website ${{ matrix.umbraco-website-version }}
+        run: dotnet restore src/HCS.Meta.Robots/HCS.Meta.Robots.csproj -p:UmbracoWebsiteVersion=${{ matrix.umbraco-website-version }}
+
+      - name: Build against Umbraco.Cms.Web.Website ${{ matrix.umbraco-website-version }}
+        run: dotnet build src/HCS.Meta.Robots/HCS.Meta.Robots.csproj --configuration Release --no-restore -p:UmbracoWebsiteVersion=${{ matrix.umbraco-website-version }}
