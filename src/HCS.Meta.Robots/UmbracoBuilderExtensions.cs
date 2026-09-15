@@ -57,10 +57,8 @@ internal static class UmbracoBuilderExtensions
         builder.Services.Configure<UmbracoPipelineOptions>(options => {
             options.AddFilter(new UmbracoPipelineFilter(
                 name: "HCS.Meta.Robots",
-                postRouting: applicationBuilder =>
+                endpoints: applicationBuilder =>
                 {
-                    applicationBuilder.UseAuthentication();
-                    applicationBuilder.UseAuthorization();
                     applicationBuilder.UseEndpoints(u =>
                     {
                         for (int i = 0; i < RoutePatterns.Default.Length; i++)
